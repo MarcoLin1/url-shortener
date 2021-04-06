@@ -37,7 +37,7 @@ app.post('/shortUrl', async (req, res) => {
   // 如果沒有找到會是null，代表randomString沒有重複的，相反狀況就顯示重複的訊息
   if (shortUrl === null) {
     await UrlShortener.create({ longUrl: req.body.longUrl, shortUrl: randomString })
-    res.render('index', { shortUrl: randomString, longUrl: req.body.longUrl, urlShortener: `http://www.localhost:3000/${randomString}` })
+    res.render('index', { shortUrl: randomString, longUrl: req.body.longUrl, urlShortener: `http://https://safe-earth-60644.herokuapp.com/${randomString}` })
   } else {
     res.render('index', { failed: '重複了!!!' })
   }
