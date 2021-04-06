@@ -8,6 +8,9 @@ const UrlShortener = require('./models/urlShortener')
 const db = mongoose.connection
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/url-shortener'
 
+require('dotenv').config()
+const basicUrl = process.env.Basic_Url || 'http://localhost:3000/'
+
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 db.on('error', () => {
@@ -37,7 +40,7 @@ app.post('/shortUrl', async (req, res) => {
   // 如果沒有找到會是null，代表randomString沒有重複的，相反狀況就顯示重複的訊息
   if (shortUrl === null) {
     await UrlShortener.create({ longUrl: req.body.longUrl, shortUrl: randomString })
-    res.render('index', { shortUrl: randomString, longUrl: req.body.longUrl, urlShortener: `https://safe-earth-60644.herokuapp.com/${randomString}` })
+    res.render('index', { shortUrl: randomString, longUrl: req.body.longUrl, urlShortener: `${basicUrl}${randomString}` })
   } else {
     res.render('index', { failed: '重複了!!!' })
   }
