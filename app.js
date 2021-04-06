@@ -1,13 +1,14 @@
 const express = require('express')
 const app = express()
-const port = 3000
+const PORT = process.env.PORT || 3000
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const UrlShortener = require('./models/urlShortener')
 const db = mongoose.connection
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/url-shortener'
 
-mongoose.connect('mongodb://localhost/url-shortener', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 db.on('error', () => {
   console.log('mongodb error')
@@ -48,6 +49,6 @@ app.get('/:randomUrl', async (req, res) => {
   return res.redirect(url.longUrl)
 })
 
-app.listen(port, () => {
-  console.log(`App is running on http://localhost:${port}`)
+app.listen(PORT, () => {
+  console.log(`App is running on http://localhost:${PORT}`)
 })
