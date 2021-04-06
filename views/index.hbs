@@ -1,30 +1,39 @@
-<div class="container mt-5">
-  <form action="/" method="POST">
-    <div class="row" style="display: flex; justify-content:center; color:rgb(175, 146, 103)">
-      <h1>URL Shortener</h1>
+<div class="container mt-5" style="width: 40%;">
+  <div class="row" style="display: flex; justify-content:center; color:rgb(175, 146, 103)">
+    <h1>URL Shortener</h1>
+  </div>
+  {{#if failed}}
+  <div class="alert alert-info" role="alert" style="display:flex;justify-content:center;">
+    <div class="mt-2" style="color: red; font-weight:bold; font-size:large;">{{failed}}
     </div>
-    <div class="row mt-5" style="display: flex; justify-content:center;color:goldenrod">
-      <i class="fas fa-link fa-5x"></i>
-    </div>
-    <div class="row mt-5 form-group" style="display: flex; justify-content:center">
-      {{!-- <label for="longUrl"></label> --}}
+  </div>
+  {{/if}}
+  <div class="row mt-5" style="display: flex; justify-content:center;color:goldenrod">
+    <i class="fas fa-link fa-5x"></i>
+  </div>
+  <form action="/shortUrl" method="POST" id="form">
+    <div class="mt-5 form-group">
       <input class="form-control" type="url" name="longUrl" id="longUrl" placeholder="Input URL here"
-        style="max-width: 600px; height:50px;" required>
+        style="height:50px; justify-content:center; display:flex;" value="{{longUrl}}" required>
+      <div class="invalid-feedback">Please check your URL</div>
     </div>
+    <small class="form-text">ex: http://www.google.com</small>
     <div class="row mt-3" style="display: flex; justify-content:center">
-      <button class="form-control mt-4 btn btn-warning" type="submit"
+      <button class="mt-4 btn btn-warning submittedBtn" type="submit"
         style="max-width: 150px; height:50px; font-weight:bold">Shortener</button>
     </div>
   </form>
-  <form action="">
-    <div class="row mt-5" style="display: flex; justify-content:center;">
-      <div class="form-group">
-        <label for="shortUrl">Output</label>
-        <div style="border: 1px solid #ced4da; width:600px; height:50px;display:flex;">
-          <a href="{{urlShortener}}" target="_blank" style="display:flex;align-items:center;">{{randomUrl}}</a>
-        </div>
-      </div>
-    </div>
+  <div class="form-group">
+    <label for="shortUrl" class="col-form-label">Output</label>
+    {{!-- <div class="form-control" style="border: 1px solid #ced4da;height:50px;display:flex;"></div> --}}
+    <input name="shortUrl" id="shortUrl" class="form-control" target="_blank" style="height:50px;"
+      value="{{urlShortener}}">
+  </div>
 </div>
-</form>
-</div>
+<script>
+  const submittedBtn = document.querySelector('.submittedBtn')
+  const form = document.querySelector('#form')
+  submittedBtn.addEventListener('click', function onSubmittedButton(event) {
+    form.classList.add('was-validated')
+  })
+</script>
